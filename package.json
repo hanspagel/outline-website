@@ -10,6 +10,7 @@
     "lint": "yarn eslint \"{pages,components,lib}/**/*.{ts,tsx}\""
   },
   "dependencies": {
+    "@scalar/api-reference": "^1.1.7",
     "classnames": "^2.2.6",
     "core-js": "^3.9.1",
     "date-fns": "^2.14.0",
@@ -28,7 +29,9 @@
     "remark": "^14.0.2",
     "strip-markdown": "^5.0.0",
     "styled-components": "^5.2.2",
-    "tiny-cookie": "^2.3.2"
+    "tiny-cookie": "^2.3.2",
+    "veaury": "^2.3.12",
+    "vue": "^3.3.8"
   },
   "devDependencies": {
     "@types/node": "^14.0.11",

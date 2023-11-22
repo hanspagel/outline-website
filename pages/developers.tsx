@@ -3,6 +3,10 @@ import fetch from "isomorphic-fetch";
 import { RedocStandalone } from "redoc";
 import Layout from "components/Layout";
 import { colors, typography } from "../theme";
+import { ApiReference as VueComponent } from "@scalar/api-reference";
+import { applyVueInReact } from "veaury";
+
+const ApiReference = applyVueInReact(VueComponent);
 
 export default function Developers({ spec }) {
   return (
@@ -13,129 +17,126 @@ export default function Developers({ spec }) {
       integrate the creation and publishing of documents into your teams
       workflows."
     >
-      <div className="container">
-        <RedocStandalone
-          spec={spec}
-          options={{
-            nativeScrollbars: true,
-            disableSearch: true,
-            hideDownloadButton: true,
-            hideLoading: true,
-            menuToggle: true,
-            requiredPropsFirst: true,
-            hideSecuritySection: true,
-            theme: {
-              spacing: {
-                unit: 4,
-              },
-              breakpoints: {
-                small: "50rem",
-                medium: "1000rem",
-                large: "1000rem",
-              },
-              colors: {
-                primary: {
-                  main: colors.primary,
-                },
-                gray: {
-                  50: colors.lightGrey,
-                  100: colors.greyDark,
-                },
-                text: {
-                  primary: colors.almostBlack,
-                  secondary: colors.greyMid,
-                },
-                error: {
-                  main: colors.brand.red,
-                },
-              },
-              typography: {
-                fontSize: "16px",
-                fontFamily: typography.fontFamily,
-                headings: {
-                  fontFamily: typography.fontFamily,
-                  fontWeight: "500",
-                  lineHeight: "inherit",
-                },
-                code: {
-                  fontFamily: typography.fontFamilyMono,
-                  color: colors.brand.red,
-                },
-              },
-              sidebar: {
-                width: "20%",
-                backgroundColor: colors.white,
-                textColor: colors.black,
-              },
-            },
-          }}
-        />
-      </div>
+      <ApiReference
+        configuration={{
+          spec: { content: JSON.stringify(spec) },
+        }}
+      />
       <style jsx global>{`
-        .redoc-wrap .token.boolean {
-          color: ${colors.brand.red} !important;
+        :root {
+          --theme-font: "Inter", var(--system-fonts);
+        }
+        /* basic theme */
+        .light-mode {
+          --theme-color-1: #111318;
+          --theme-color-2: #4e5c6e;
+          --theme-color-3: #9ba6b2;
+          --theme-color-accent: #3141f5;
+
+          --theme-background-1: #fff;
+          --theme-background-2: #f3f5f8;
+          --theme-background-3: #e1eaf2;
+          --theme-background-accent: #e5e5e5;
+
+          --theme-border-color: rgba(0, 0, 0, 0.1);
+        }
+        .dark-mode {
+          --theme-color-1: rgba(255, 255, 255, 0.9);
+          --theme-color-2: rgba(255, 255, 255, 0.62);
+          --theme-color-3: rgba(255, 255, 255, 0.44);
+          --theme-color-accent: #8a92ea;
+
+          --theme-background-1: #040506;
+          --theme-background-2: #111318;
+          --theme-background-3: #16181f;
+          --theme-background-accent: #8ab4f81f;
+
+          --theme-border-color: rgba(255, 255, 255, 0.1);
+        }
+        /* Document header */
+        .light-mode .t-doc__header {
+          --header-background-1: var(--theme-background-1);
+          --header-border-color: var(--theme-border-color);
+          --header-color-1: var(--theme-color-1);
+          --header-color-2: var(--theme-color-2);
+          --header-background-toggle: var(--theme-color-3);
+          --header-call-to-action-color: var(--theme-color-accent);
         }
 
-        .redoc-wrap .token.number {
-          color: ${colors.brand.marine} !important;
+        .dark-mode .t-doc__header {
+          --header-background-1: var(--theme-background-1);
+          --header-border-color: var(--theme-border-color);
+          --header-color-1: var(--theme-color-1);
+          --header-color-2: var(--theme-color-2);
+          --header-background-toggle: var(--theme-color-3);
+          --header-call-to-action-color: var(--theme-color-accent);
+        }
+        /* Document Sidebar */
+        .light-mode .t-doc__sidebar {
+          --sidebar-background-1: var(--theme-background-1);
+          --sidebar-item-hover-color: currentColor;
+          --sidebar-item-hover-background: var(--theme-background-2);
+          --sidebar-item-active-background: #f2f2f2;
+          --sidebar-border-color: var(--theme-border-color);
+          --sidebar-color-1: var(--theme-color-1);
+          --sidebar-color-2: var(--theme-color-2);
+          --sidebar-color-active: var(--theme-color-1);
+          --sidebar-search-background: var(--theme-background-2);
+          --sidebar-search-border-color: var(--theme-background-2);
+          --sidebar-search--color: var(--theme-color-3);
         }
 
-        .redoc-wrap .token.string {
-          color: ${colors.brand.green} !important;
+        .dark-mode .sidebar {
+          --sidebar-background-1: var(--theme-background-1);
+          --sidebar-item-hover-color: currentColor;
+          --sidebar-item-hover-background: var(--theme-background-2);
+          --sidebar-item-active-background: var(--theme-background-3);
+          --sidebar-border-color: var(--theme-border-color);
+          --sidebar-color-1: var(--theme-color-1);
+          --sidebar-color-2: var(--theme-color-2);
+          --sidebar-color-active: var(--theme-color-1);
+          --sidebar-search-background: var(--theme-background-2);
+          --sidebar-search-border-color: var(--theme-background-2);
+          --sidebar-search--color: var(--theme-color-3);
         }
 
-        .redoc-wrap .token.keyword {
-          color: ${colors.brand.pink} !important;
-        }
+        /* advanced */
+        .light-mode {
+          --theme-button-1: rgb(49 53 56);
+          --theme-button-1-color: #fff;
+          --theme-button-1-hover: rgb(28 31 33);
 
-        .redoc-wrap .api-content {
-          margin-top: -42px;
-        }
+          --theme-color-green: #3bd984;
+          --theme-color-red: #d73a4a;
+          --theme-color-yellow: #f5be31;
+          --theme-color-blue: #3533ff;
+          --theme-color-orange: #fb892c;
+          --theme-color-purple: #5203d1;
 
-        .redoc-wrap .api-info,
-        .redoc-wrap .operation-type,
-        .redoc-wrap .menu-content ul + div {
-          display: none;
+          --theme-scrollbar-color: rgba(0, 0, 0, 0.18);
+          --theme-scrollbar-color-active: rgba(0, 0, 0, 0.36);
         }
+        .dark-mode {
+          --theme-button-1: #f6f6f6;
+          --theme-button-1-color: #000;
+          --theme-button-1-hover: #e7e7e7;
 
-        .redoc-wrap .menu-content {
-          transform: translateX(-13px);
+          --theme-color-green: #00b648;
+          --theme-color-red: #d73a4a;
+          --theme-color-yellow: #dcdcaa;
+          --theme-color-blue: #569cd6;
+          --theme-color-orange: #ce9178;
+          --theme-color-purple: #b191f9;
+
+          --theme-scrollbar-color: rgba(255, 255, 255, 0.24);
+          --theme-scrollbar-color-active: rgba(255, 255, 255, 0.48);
         }
+        :root {
+          --theme-radius: 3px;
+          --theme-radius-lg: 6px;
+          --theme-radius-xl: 8px;
 
-        .redoc-wrap .menu-content label {
-          -webkit-font-smoothing: initial;
-          text-rendering: initial;
-          font-size: 16px;
-          border-radius: 4px;
-        }
-
-        .redoc-wrap .menu-content ul li ul li label {
-          font-size: 14px;
-          color: ${colors.almostBlack};
-          padding-left: 24px;
-        }
-
-        .redoc-wrap .menu-content ul li ul li label span {
-          white-space: no-wrap;
-          width: 100%;
-        }
-
-        .redoc-wrap h1 {
-          color: ${colors.almostBlack};
-          margin: 1em 0 -0.5em;
-        }
-
-        .redoc-wrap h1,
-        .redoc-wrap h2,
-        .redoc-wrap h3,
-        .redoc-wrap h4 {
-          font-family: "HK Grotesk";
-          font-weight: 600;
-        }
-
-        .redoc-wrap h5,
-        .redoc-wrap a[href="#section/Authentication/http"] {
-          display: none;
+          --theme-header-height: 50px;
         }
       `}</style>
     </Layout>
